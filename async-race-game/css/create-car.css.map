@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW;AACX,WAAW,CAAC;EACV,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,KAAK;EACtB,WAAW,EAAE,MAAM;CACpB",
+    "sources": [
+        "../src/views/components/create-car/create-car.scss"
+    ],
+    "names": [],
+    "file": "create-car.css"
+}

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,YAAY,CAAC;EACX,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,KAAK;EACtB,WAAW,EAAE,MAAM;CACpB",
+    "sources": [
+        "../src/views/components/winners-table-row/winners-table-row.scss"
+    ],
+    "names": [],
+    "file": "winners-table-row.css"
+}

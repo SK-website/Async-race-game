@@ -1,0 +1,11 @@
+.pages-change-block {
+  margin-top: 1rem;
+}
+
+.pages-change-block .prev-button,
+.pages-change-block .next-button {
+  width: 5rem;
+  color: #93d2dd;
+  background-color: #4237a7;
+}
+/*# sourceMappingURL=pages-control.css.map */

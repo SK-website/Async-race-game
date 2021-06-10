@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,UAAU,CAAC;EACT,OAAO,EAAE,OAAO;EAChB,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,MAAM;EACd,YAAY,EAAE,MAAM;EACpB,aAAa,EAAE,MAAM;EACrB,OAAO,EAAE,KAAK;EACd,YAAY,EAAE,WAAW;EACzB,aAAa,EAAE,GAAG;CACnB",
+    "sources": [
+        "../src/views/components/color-pick/color-pick.scss"
+    ],
+    "names": [],
+    "file": "color-pick.css"
+}

@@ -1,0 +1,16 @@
+.nav {
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.nav-buton-garage {
+  // background: url('./../public/icons/cogwheel.png') no-repeat left;
+  background-color: rgb(66, 55, 167);
+  background-size: 15% auto;
+  color: rgb(147, 210, 221);
+}
+.nav-buton-winners {
+  background-color: yellow;
+}

@@ -1,0 +1,23 @@
+.nav {
+  margin-bottom: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+}
+
+.nav-buton-garage {
+  background-color: #4237a7;
+  background-size: 15% auto;
+  color: #93d2dd;
+}
+
+.nav-buton-winners {
+  background-color: yellow;
+}
+/*# sourceMappingURL=header.css.map */

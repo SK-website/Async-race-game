@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,mBAAmB,CAAC;EAClB,UAAU,EAAE,IAAI;CAQjB;;AATD,AAGE,mBAHiB,CAGjB,YAAY;AAHd,mBAAmB,CAIjB,YAAY,CAAC;EACX,KAAK,EAAE,IAAI;EACX,KAAK,EAAE,OAAkB;EACzB,gBAAgB,EAAE,OAAgB;CACnC",
+    "sources": [
+        "../src/views/components/pages-control/pages-control.scss"
+    ],
+    "names": [],
+    "file": "pages-control.css"
+}

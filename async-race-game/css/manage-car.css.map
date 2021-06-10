@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../src/views/components/manage-car/manage-car.scss"
+    ],
+    "names": [],
+    "file": "manage-car.css"
+}
