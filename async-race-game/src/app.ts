@@ -2,8 +2,8 @@ import './styles.scss';
 import { Header } from './views/components/header/header';
 import { GaragePage } from './views/pages/garage';
 import { WinnersPage } from './views/pages/winners';
-import './api/api';
-import { createCar } from './api/api';
+import { createCar, updateCar, getCars } from './api/api';
+import { Car } from './views/components/car/car';
 
 export class App {
   private readonly header: Header;
@@ -43,6 +43,7 @@ export class App {
       console.log('Garage should be shown', this.garagePage.element);
       this.mainElement.insertAdjacentElement('beforebegin', this.header.element);
       this.mainElement.appendChild(this.garagePage.element);
+      const cars = getCars();
     }
   }
 

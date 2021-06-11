@@ -30,8 +30,11 @@
 }
 
 .flag-container {
+  width: 46px;
+  height: 46px;
   position: absolute;
   bottom: 0;
   right: 140px;
   z-index: 100;
+  background-image: url('../../../assets/red-flag.svg');
 }
