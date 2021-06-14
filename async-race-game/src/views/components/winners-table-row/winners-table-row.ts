@@ -3,24 +3,29 @@ import '../winners-table/winners-table.scss';
 
 import { BaseComponent } from '../base-component';
 
-type WinData = {
-  number: string;
-  car: HTMLElement;
+export interface WinnerRowData {
+  color: string;
   name: string;
-  wins: string;
-  time: string;
-};
+  wins: number;
+  time: number;
+}
+
+export interface WinnerData {
+  id: number;
+  wins: number;
+  time: number;
+}
 
 export class WinnerTableRow extends BaseComponent {
   // public winnersTableRow: BaseComponent;
 
-  constructor(carData: WinData) {
+  constructor(carData: WinnerRowData) {
     super('div', ['winners-row']);
 
     this.element.innerHTML = `
     <div class="winners-row">
-    <div class="winners-col">${carData.number}</div>
-    <div class="winners-col">${carData.car}</div>
+    <div class="winners-col"></div>
+    <div class="winners-col">${carData.color}</div>
     <div class="winners-col">${carData.name}</div>
     <div class="winners-col">${carData.wins}</div>
     <div class="winners-col">${carData.time}</div></div>

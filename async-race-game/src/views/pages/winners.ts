@@ -1,33 +1,60 @@
 import { BaseComponent } from '../components/base-component';
 import { PagesControl } from '../components/pages-control/pages-control';
 import { Winners } from '../components/winners-table/winners-table';
+import { WinnerRowData, WinnerTableRow } from '../components/winners-table-row/winners-table-row';
 
 export class WinnersPage extends BaseComponent {
-  private readonly winners: Winners;
+  public winners: Winners;
 
-  private readonly winnersTitle: BaseComponent;
+  public winnersTotalAmount: BaseComponent;
 
-  private readonly pageNumber: BaseComponent;
+  public pageNumber: BaseComponent;
 
-  private readonly pagesControl: PagesControl;
+  public pagesControl: PagesControl;
+
+  public winnersContainer: BaseComponent;
 
   constructor() {
     super();
     this.winners = new Winners();
     const paginationContainer = new BaseComponent('div', ['pagination']);
-    this.winnersTitle = new BaseComponent('p', ['page-title']);
-    this.winnersTitle.element.innerHTML = `
-    Winners ()`;
-    this.pageNumber = new BaseComponent('p', ['page-namber']);
-    this.pageNumber.element.innerHTML = `
+    const winnersTitle = new BaseComponent('p', ['page-title']);
+    winnersTitle.element.innerHTML = `
+    Winners amount - `;
+    this.winnersTotalAmount = new BaseComponent('span', ['page-title']);
+    this.winnersTotalAmount.element.innerHTML = '';
+    winnersTitle.element.appendChild(this.winnersTotalAmount.element);
+
+    const page = new BaseComponent('p', ['page-namber']);
+    page.element.innerHTML = `
     Page #`;
-    paginationContainer.element.appendChild(this.winnersTitle.element);
-    paginationContainer.element.appendChild(this.pageNumber.element);
+    this.pageNumber = new BaseComponent('span', ['page-namber']);
+    this.pageNumber.element.innerHTML = '';
+    page.element.appendChild(this.pageNumber.element);
+    paginationContainer.element.appendChild(winnersTitle.element);
+    paginationContainer.element.appendChild(page.element);
+
+    this.winnersContainer = new BaseComponent();
 
     this.pagesControl = new PagesControl();
 
     this.element.appendChild(paginationContainer.element);
     this.element.appendChild(this.winners.element);
+    this.element.appendChild(this.winnersContainer.element);
     this.element.appendChild(this.pagesControl.element);
+  }
+
+  addWinnersAmount(carsAmount: string): void {
+    console.log('количество машин', carsAmount);
+    this.winnersTotalAmount.element.innerHTML = `${carsAmount}`;
+  }
+
+  addPageNumber(n: number): void {
+    this.pageNumber.element.innerHTML = `${String(n)}`;
+  }
+
+  addWinnerRow(carData: WinnerRowData): void {
+    const newWinnersTableRow = new WinnerTableRow(carData);
+    this.winnersContainer.element.appendChild(newWinnersTableRow.element);
   }
 }

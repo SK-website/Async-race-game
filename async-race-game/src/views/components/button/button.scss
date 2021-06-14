@@ -23,9 +23,24 @@
 //   color: #fefefe;
 // }
 
-.car-button {
-  width: 3rem;
-  height: 1rem;
+// .car-button {
+//   width: 3rem;
+//   height: 1rem;
+//   font-size: 0.6rem;
+//   background-color: rgb(206, 206, 235);
+// }
+
+.create-car-button,
+.update-car-button {
   font-size: 0.6rem;
-  background-color: rgb(206, 206, 235);
+  width: 6.5rem;
+  height: 1.1rem;
+}
+
+.reset-button,
+.race-button,
+.generate-button {
+  font-size: 0.6rem;
+  width: 6.5rem;
+  height: 1.1rem;
 }

@@ -2,11 +2,11 @@ import { BaseComponent } from '../base-component';
 import { Button } from '../button/button';
 
 export class ManageCar extends BaseComponent {
-  private readonly raceButton: Button;
+  public raceButton: Button;
 
-  private readonly resetButton: Button;
+  public resetButton: Button;
 
-  private readonly generateButton: Button;
+  public generateButton: Button;
 
   constructor() {
     super('div', ['manage-race']);

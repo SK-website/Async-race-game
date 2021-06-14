@@ -2,14 +2,19 @@
 
 import { BaseComponent } from '../base-component';
 
+export interface NewCarData {
+  name: string;
+  color: string;
+  id: number;
+}
 export class Car extends BaseComponent {
-  private readonly name: string;
+  public name: string;
 
-  private readonly color: string;
+  public color: string;
 
-  private readonly id: number;
+  public id: number;
 
-  constructor(name: string, color: string, id: number) {
+  constructor({ name, color, id }: NewCarData) {
     super('div', ['car-picture-container']);
     this.name = name;
     this.color = color;
@@ -22,10 +27,10 @@ export class Car extends BaseComponent {
     xmlns:xlink="http://www.w3.org/1999/xlink"
     x="0px"
     y="0px"
-    width="79.536px"
-    height="55.536px"
-    viewBox="0 0 79.536 55"
-    style="enable-background: new 0 0 79.536 40"
+    width="68px"
+    height="35px"
+    viewBox="0 0 79.536 57"
+    style="enable-background: new 0 0 79.536 10"
     xml:space="preserve"
   >
     <g>

@@ -4,11 +4,11 @@ import { ColorPick } from '../color-pick/color-pick';
 import { Name } from '../name/name';
 
 export class UpdateCar extends BaseComponent {
-  private readonly updateName: Name;
+  public updateName: Name;
 
-  private readonly updateColor: ColorPick;
+  public updateColor: ColorPick;
 
-  private readonly updateButton: Button;
+  public updateButton: Button;
 
   constructor() {
     super('div', ['update-car']);
@@ -19,4 +19,14 @@ export class UpdateCar extends BaseComponent {
     this.element.appendChild(this.updateColor.colorPick);
     this.element.appendChild(this.updateButton.button);
   }
+
+  getCarUpdateData = (): Record<string, unknown> => {
+    const carUpdatedName = this.updateName.name.value;
+    const carUpdatedColor = this.updateColor.colorPick.value;
+    console.log('carUpdatedName = ', carUpdatedName, 'carUpdatedColor = ', carUpdatedColor);
+    return {
+      name: carUpdatedName,
+      color: carUpdatedColor,
+    };
+  };
 }

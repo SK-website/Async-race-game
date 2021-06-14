@@ -1,14 +1,14 @@
-import { Fragment } from '../fragment';
 import { UpdateCar } from '../update-car/update-car';
 import { ManageCar } from '../manage-car/manage-car';
 import { CreateCar } from '../create-car/create-car';
+import { BaseComponent } from '../base-component';
 
-export class Control extends Fragment {
+export class Control extends BaseComponent {
   public createBlock: CreateCar;
 
-  private readonly updateBlock: UpdateCar;
+  public updateBlock: UpdateCar;
 
-  private readonly manageBlock: ManageCar;
+  public manageBlock: ManageCar;
 
   constructor() {
     super();
@@ -16,8 +16,8 @@ export class Control extends Fragment {
     this.updateBlock = new UpdateCar();
     this.manageBlock = new ManageCar();
 
-    this.fragment.appendChild(this.createBlock.element);
-    this.fragment.appendChild(this.updateBlock.element);
-    this.fragment.appendChild(this.manageBlock.element);
+    this.element.appendChild(this.createBlock.element);
+    this.element.appendChild(this.updateBlock.element);
+    this.element.appendChild(this.manageBlock.element);
   }
 }

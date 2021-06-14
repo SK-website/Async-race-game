@@ -1,9 +1,25 @@
-import { NewCar } from '../views/components/new-car/new-car';
+import { WinnerData } from '../views/components/winners-table-row/winners-table-row';
+import { NewCarData } from '../views/components/car/car';
 
 const base = 'http://localhost:3000';
 const garage = `${base}/garage`;
 const engine = `${base}/engine`;
 const winners = `${base}/winners`;
+
+export interface GetCarsReturn {
+  result: NewCarData[];
+  totalAmount: string;
+}
+export interface GetWinnersResult {
+  result: WinnerData[];
+  totalAmount: string;
+}
+
+// export interface WinnerData {
+//   id: number;
+//   wins: number;
+//   time: number;
+// }
 
 export const createCar = async (body: Record<string, unknown>) => {
   const response = await fetch(garage, {
@@ -11,25 +27,58 @@ export const createCar = async (body: Record<string, unknown>) => {
     body: JSON.stringify(body),
     headers: { 'Content-Type': 'application/json' },
   });
-  const result = await response.json();
-  console.log('it is result', result);
-  const newCar = new NewCar(result);
+  const result = response.json();
+  return result;
 };
 
 export const updateCar = async (body: Record<string, unknown>, id: number) => {
-  const url = garage + String(id);
-  await fetch(url, {
+  const url = `${garage}/${id}`;
+  const response = await fetch(url, {
     method: 'PUT',
     body: JSON.stringify(body),
     headers: { 'Content-Type': 'application/json' },
-  })
-    .then((response) => response.json())
-    .then((result) => console.log('it is result' + result));
+  });
+  const result = response.json();
+  console.log('it is result', result);
+  return result;
 };
 
-export const getCars = async (page: number = 1, limit: number = 7) => {
+export const getCars = async (page = 1, limit = 7): Promise<GetCarsReturn> => {
   const response = await fetch(`${garage}?_page=${page}&_limit=${limit}`);
-  const result = await response.json();
-  const totalNumber = response.headers.get('X-Total-Count');
-  console.log('getCars result  = ', result, totalNumber);
+  const result: NewCarData[] = await response.json();
+  let totalAmount = response.headers.get('X-Total-Count');
+  if (typeof totalAmount !== 'string') {
+    totalAmount = '0';
+  }
+  return { result, totalAmount };
+};
+
+export const getCar = async (id: number): Promise<NewCarData> => {
+  const url = `${garage}/${id}`;
+  const response = await fetch(url);
+  const result = response.json();
+  console.log('it is result', result);
+  return result;
+};
+
+export const removeCar = async (id: number): Promise<Response> => {
+  const url = `${garage}/${id}`;
+  const response = await fetch(url, {
+    method: 'DELETE',
+  });
+  const result = response.json();
+  console.log('it is result of delete', result);
+  return result;
+};
+
+export const getWinners = async (page = 1, limit = 10, sort = 'wins', order = 'DESC'): Promise<GetWinnersResult> => {
+  console.log('getWinners works');
+  const response = await fetch(`${winners}?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`);
+  const result: WinnerData[] = await response.json();
+  let totalAmount = response.headers.get('X-Total-Count');
+  if (typeof totalAmount !== 'string') {
+    totalAmount = '0';
+  }
+  console.log({ result, totalAmount });
+  return { result, totalAmount };
 };
