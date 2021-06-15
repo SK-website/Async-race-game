@@ -75,28 +75,53 @@ export const removeCar = async (id: number): Promise<Response> => {
   console.log('it is result of delete', result);
   return result;
 };
-export const startEngine = async (id: number, status = 'start'): Promise<StartCarData> => {
-  const url = `${engine}?_id=${id}&_status=${status}`;
+export const startEngine = async (id: number, status = 'started'): Promise<StartCarData> => {
+  console.log('start engine works');
+  const url = `${engine}?id=${id}&status=${status}`;
   const response = await fetch(url);
   const result: StartCarData = await response.json();
-  console.log(result);
-
   return result;
 };
 export const toDriveMode = async (id: number, status = 'drive'): Promise<boolean> => {
-  const url = `${engine}?_id=${id}&_status=${status}`;
-	try{ const response = await fetch(url);
-  const result = await response.json();
-  console.log(result);
-} catch (err) {
-	if (err === "404")
-}
-) {
+  const url = `${engine}?id=${id}&status=${status}`;
+  try {
+    const response = await fetch(url);
+    // console.log(response);
+    if (response.status === 200) {
+      const result = await response.json();
+      return result.success;
+    }
+    switch (response.status) {
+      case 500:
+        console.log('Car is broken!!!');
+        return false;
+      case 400:
+        console.log('400');
+        break;
+      case 404:
+        console.log('404');
+        break;
+      case 429:
+        console.log('429');
+        break;
+      default:
+        break;
+    }
+  } catch (e) {
+    console.log(e);
+  }
 
-}
- 
-  return result.success;
+  return false;
 };
+
+// if (response.status === 200) {
+//   const result = await response.json();
+//   return result.success;
+// }
+// if (response.status === 500) {
+//   console.log('Car is broken!!!');
+// }
+// return false;
 
 export const getWinners = async (page = 1, limit = 10, sort = 'wins', order = 'DESC'): Promise<GetWinnersResult> => {
   console.log('getWinners works');

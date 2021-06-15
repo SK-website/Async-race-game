@@ -78,6 +78,7 @@ export class App {
     this.garagePage.onStartButtonClick = () => {
       const currentCar = this.garagePage.currentCar as NewCar;
       const currentCarId: number = currentCar.car.id;
+      console.log(currentCarId);
       win.startCarEngine(currentCarId);
     };
   }

@@ -1,5 +1,5 @@
 import { WinnerData, WinnerRowData } from '../views/components/winners-table-row/winners-table-row';
-import { getCar, StartCarData, startEngine } from '../api/api';
+import * as apiserv from '../api/api';
 import { NewCarData } from '../views/components/car/car';
 
 export const getWinnerCarColor = (carData: NewCarData): string => carData.color;
@@ -7,7 +7,7 @@ export const getWinnerCarColor = (carData: NewCarData): string => carData.color;
 export const getWinnerName = (carData: NewCarData): string => carData.name;
 
 export const getWinnerRowData = async ({ id, wins: carWins, time: winTime }: WinnerData): Promise<WinnerRowData> => {
-  const result = await getCar(Number(id));
+  const result = await apiserv.getCar(Number(id));
   console.log(result);
   const carName = getWinnerName(result);
   const carColor = getWinnerCarColor(result);
@@ -20,10 +20,16 @@ export const getWinnerRowData = async ({ id, wins: carWins, time: winTime }: Win
   };
 };
 
-export const getCarRaceTime = ({ velocity, distance }: StartCarData): number => distance / velocity;
+export const getCarRaceTime = ({ velocity, distance }: apiserv.StartCarData): number => distance / velocity;
 
 export const startCarEngine = async (id: number) => {
-  const result = await startEngine(id);
+  console.log('startCarEngine   works');
+  const result = await apiserv.startEngine(id);
+  console.log('startEngine   ', result);
   const time: number = getCarRaceTime(result);
-  return time;
+  console.log(time);
+  const isBroken = await apiserv.toDriveMode(id);
+  console.log('toDriveMode', isBroken);
+  if (!isBroken) console.log('Stop car animation');
+  if (isBroken) console.log('finish');
 };
