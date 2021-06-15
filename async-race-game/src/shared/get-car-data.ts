@@ -22,14 +22,30 @@ export const getWinnerRowData = async ({ id, wins: carWins, time: winTime }: Win
 
 export const getCarRaceTime = ({ velocity, distance }: apiserv.StartCarData): number => distance / velocity;
 
-export const startCarEngine = async (id: number) => {
+export const startCarEngine = async (id: number): Promise<void> => {
   console.log('startCarEngine   works');
-  const result = await apiserv.startEngine(id);
-  console.log('startEngine   ', result);
-  const time: number = getCarRaceTime(result);
-  console.log(time);
-  const isBroken = await apiserv.toDriveMode(id);
-  console.log('toDriveMode', isBroken);
-  if (!isBroken) console.log('Stop car animation');
-  if (isBroken) console.log('finish');
+  await apiserv.startEngine(id).then((result) => {
+    const time: number = getCarRaceTime(result);
+    console.log(time);
+    // функция start машинки
+  });
+  apiserv.toDriveMode(id).then((result) => {
+    if (!result) {
+      console.log('toDriveMode     Stop car animation');
+      // функция stop машинки
+    }
+    if (result) console.log('finish');
+  });
 };
+
+// export const startCarEngine = async (id: number) => {
+//   console.log('startCarEngine   works');
+//   const result = await apiserv.startEngine(id);
+//   console.log('startEngine   ', result);
+//   const time: number = getCarRaceTime(result);
+//   console.log(time);
+//   const isBroken = await apiserv.toDriveMode(id);
+//   console.log('toDriveMode', isBroken);
+//   if (!isBroken) console.log('Stop car animation');
+//   if (isBroken) console.log('finish');
+// };

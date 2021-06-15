@@ -110,18 +110,8 @@ export const toDriveMode = async (id: number, status = 'drive'): Promise<boolean
   } catch (e) {
     console.log(e);
   }
-
   return false;
 };
-
-// if (response.status === 200) {
-//   const result = await response.json();
-//   return result.success;
-// }
-// if (response.status === 500) {
-//   console.log('Car is broken!!!');
-// }
-// return false;
 
 export const getWinners = async (page = 1, limit = 10, sort = 'wins', order = 'DESC'): Promise<GetWinnersResult> => {
   console.log('getWinners works');
