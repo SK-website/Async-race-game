@@ -33,9 +33,7 @@ export class WinnersPage extends BaseComponent {
     page.element.appendChild(this.pageNumber.element);
     paginationContainer.element.appendChild(winnersTitle.element);
     paginationContainer.element.appendChild(page.element);
-
-    this.winnersContainer = new BaseComponent();
-
+    this.winnersContainer = new BaseComponent('div', ['winners-container']);
     this.pagesControl = new PagesControl();
 
     this.element.appendChild(paginationContainer.element);

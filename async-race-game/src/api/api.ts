@@ -14,6 +14,10 @@ export interface GetWinnersResult {
   result: WinnerData[];
   totalAmount: string;
 }
+export interface StartCarData {
+  velocity: number;
+  distance: number;
+}
 
 // export interface WinnerData {
 //   id: number;
@@ -46,6 +50,7 @@ export const updateCar = async (body: Record<string, unknown>, id: number) => {
 export const getCars = async (page = 1, limit = 7): Promise<GetCarsReturn> => {
   const response = await fetch(`${garage}?_page=${page}&_limit=${limit}`);
   const result: NewCarData[] = await response.json();
+  console.log(result);
   let totalAmount = response.headers.get('X-Total-Count');
   if (typeof totalAmount !== 'string') {
     totalAmount = '0';
@@ -69,6 +74,28 @@ export const removeCar = async (id: number): Promise<Response> => {
   const result = response.json();
   console.log('it is result of delete', result);
   return result;
+};
+export const startEngine = async (id: number, status = 'start'): Promise<StartCarData> => {
+  const url = `${engine}?_id=${id}&_status=${status}`;
+  const response = await fetch(url);
+  const result: StartCarData = await response.json();
+  console.log(result);
+
+  return result;
+};
+export const toDriveMode = async (id: number, status = 'drive'): Promise<boolean> => {
+  const url = `${engine}?_id=${id}&_status=${status}`;
+	try{ const response = await fetch(url);
+  const result = await response.json();
+  console.log(result);
+} catch (err) {
+	if (err === "404")
+}
+) {
+
+}
+ 
+  return result.success;
 };
 
 export const getWinners = async (page = 1, limit = 10, sort = 'wins', order = 'DESC'): Promise<GetWinnersResult> => {

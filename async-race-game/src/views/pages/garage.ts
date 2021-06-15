@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { BaseComponent } from '../components/base-component';
 import { Control } from '../components/control/control';
 import { NewCar } from '../components/new-car/new-car';
@@ -19,6 +20,8 @@ export class GaragePage extends BaseComponent {
   public carsContainer: BaseComponent;
 
   public onDeleteButtonClick: (() => void) | null = null;
+
+  public onStartButtonClick: (() => void) | null = null;
 
   constructor() {
     super();
@@ -70,6 +73,11 @@ export class GaragePage extends BaseComponent {
       const carId = removableCar.car.id;
       removeCar(carId);
       this.onDeleteButtonClick?.();
+    };
+
+    newLine.startButton.onButtonClick = () => {
+      this.currentCar = newLine;
+      this.onStartButtonClick?.();
     };
   }
 

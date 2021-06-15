@@ -20,7 +20,11 @@ export class App {
 
   private winnersPage: WinnersPage;
 
+  private engineStatus: string;
+
   constructor() {
+    this.engineStatus = 'stopped';
+
     this.header = new Header();
     this.garagePage = new GaragePage();
     this.mainElement = document.getElementById('main');
@@ -71,11 +75,17 @@ export class App {
         console.log('new page  ', newPage);
       }
     };
+    this.garagePage.onStartButtonClick = () => {
+      const currentCar = this.garagePage.currentCar as NewCar;
+      const currentCarId: number = currentCar.car.id;
+      win.startCarEngine(currentCarId);
+    };
   }
 
   showGarage(page = 1): void {
     if (this.mainElement) {
       this.mainElement.innerHTML = '';
+      this.garagePage.carsContainer.element.innerHTML = '';
       this.mainElement.insertAdjacentElement('beforebegin', this.header.element);
       this.mainElement.appendChild(this.garagePage.element);
       serv.getCars(page).then((result) => {
@@ -105,6 +115,7 @@ export class App {
   showWinners(page = 1): void {
     if (this.mainElement) {
       this.mainElement.innerHTML = '';
+      this.winnersPage.winnersContainer.element.innerHTML = '';
       console.log('Winners should be shown');
       this.mainElement.appendChild(this.winnersPage.element);
       serv.getWinners(page).then((result) => {

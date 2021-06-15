@@ -128,6 +128,11 @@ button {
   font-weight: 600;
   letter-spacing: 1.5px;
 }
+
+.inactive {
+  cursor: auto;
+  pointer-events: none;
+}
 // .start-car-button,
 // .box-car-button {
 //   width: 1.1rem;

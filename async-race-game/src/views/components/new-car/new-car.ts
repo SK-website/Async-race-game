@@ -33,7 +33,7 @@ export class NewCar extends BaseComponent {
     row1.appendChild(this.carName);
 
     this.startButton = new Button('a', 'start', ['car-button', 'start-car-button']);
-    this.boxButton = new Button('b', 'box', ['car-button', 'box-car-button']);
+    this.boxButton = new Button('b', 'box', ['car-button', 'box-car-button', 'inactive']);
 
     const row2 = document.createElement('div');
     row2.classList.add('row-2');

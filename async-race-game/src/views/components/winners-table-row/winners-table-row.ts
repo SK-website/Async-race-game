@@ -22,14 +22,12 @@ export class WinnerTableRow extends BaseComponent {
   constructor(carData: WinnerRowData) {
     super('div', ['winners-row']);
 
-    this.element.innerHTML = `
-    <div class="winners-row">
+    this.element.innerHTML = `    
     <div class="winners-col"></div>
     <div class="winners-col">${carData.color}</div>
     <div class="winners-col">${carData.name}</div>
     <div class="winners-col">${carData.wins}</div>
     <div class="winners-col">${carData.time}</div></div>
-  </div>
     `;
   }
 }

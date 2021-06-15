@@ -3,7 +3,7 @@ import './winners-table.scss';
 import { BaseComponent } from '../base-component';
 
 export class Winners extends BaseComponent {
-  private winnersTableHeader: BaseComponent;
+  // private winnersTableHeader: BaseComponent;
 
   public winnerNumber: BaseComponent;
 
@@ -15,10 +15,12 @@ export class Winners extends BaseComponent {
 
   public winnerTime: BaseComponent;
 
+  private readonly winnersTableHeader: BaseComponent;
+
   public onButtonClick: (() => void) | null = null;
 
   constructor() {
-    super('div', ['winners-container']);
+    super('div', ['winners-header-container']);
     this.winnersTableHeader = new BaseComponent('div', ['winners-row']);
     this.winnerNumber = new BaseComponent('div', ['title-winners-col']);
     this.winnerNumber.element.textContent = 'number';
