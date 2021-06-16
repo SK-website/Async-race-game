@@ -17,6 +17,8 @@ export class NewCar extends BaseComponent {
 
   public car: Car;
 
+  public road: BaseComponent;
+
   constructor(carData: NewCarData) {
     super('div', ['car']);
     this.selectButton = new Button('select', 'select', ['car-button', 'select-car-button']);
@@ -43,13 +45,12 @@ export class NewCar extends BaseComponent {
     this.car = new Car(carData);
     const flagContainer = document.createElement('div');
     flagContainer.classList.add('flag-container');
-    const row3 = document.createElement('div');
-    row3.classList.add('row-3');
-    row3.appendChild(this.car.element);
-    row3.appendChild(flagContainer);
+    this.road = new BaseComponent('div', ['road']);
+    this.road.element.appendChild(this.car.element);
+    this.road.element.appendChild(flagContainer);
 
     this.element.appendChild(row1);
     this.element.appendChild(row2);
-    this.element.appendChild(row3);
+    this.element.appendChild(this.road.element);
   }
 }

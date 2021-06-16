@@ -5,11 +5,10 @@ import { GaragePage } from './views/pages/garage';
 import { WinnersPage } from './views/pages/winners';
 import * as serv from './api/api';
 import * as win from './shared/get-car-data';
+import * as an from './shared/animation';
 import { NewCarData } from './views/components/car/car';
 import { NewCar } from './views/components/new-car/new-car';
-import { WinnerRowData, WinnerData } from './views/components/winners-table-row/winners-table-row';
-
-// import { Car } from './views/components/car/car';
+import { WinnerData } from './views/components/winners-table-row/winners-table-row';
 
 export class App {
   private readonly header: Header;
@@ -56,12 +55,10 @@ export class App {
     };
     this.garagePage.onDeleteButtonClick = () => {
       this.showChangedCarList();
-      console.log('onDeleteButtonClick works');
     };
     this.garagePage.pagesControl.nextButton.onButtonClick = () => {
       const currentPageNumber = Number(this.garagePage.pageNumber.element.innerHTML);
       const carsTotalAmount = Number(this.garagePage.carsTotalAmount.element.innerHTML);
-      console.log(currentPageNumber, carsTotalAmount);
       if (carsTotalAmount / currentPageNumber > 7) {
         const newPage = currentPageNumber + 1;
         this.showChangedCarList(newPage);
@@ -72,14 +69,26 @@ export class App {
       if (currentPageNumber > 1) {
         const newPage = currentPageNumber - 1;
         this.showChangedCarList(newPage);
-        console.log('new page  ', newPage);
       }
     };
-    this.garagePage.onStartButtonClick = () => {
+    this.garagePage.onStartButtonClick = async () => {
       const currentCar = this.garagePage.currentCar as NewCar;
+      currentCar.startButton.button.classList.add('inactive');
+      currentCar.boxButton.button.classList.remove('inactive');
       const currentCarId: number = currentCar.car.id;
-      console.log(currentCarId);
-      win.startCarEngine(currentCarId);
+      const car = currentCar.car.carPictureContainer;
+      await an.startAnimation(currentCarId, car);
+      currentCar.boxButton.button.classList.add('active');
+    };
+
+    this.garagePage.onBoxButtonClick = async () => {
+      const currentCar = this.garagePage.currentCar as NewCar;
+      currentCar.startButton.button.classList.add('inactive');
+      currentCar.boxButton.button.classList.add('inactive');
+      const car = currentCar.car.carPictureContainer;
+      an.toBox(car);
+      currentCar.startButton.button.classList.remove('inactive');
+      currentCar.boxButton.button.classList.add('inactive');
     };
   }
 
@@ -108,7 +117,6 @@ export class App {
           this.garagePage.addCarsAmount(result.totalAmount);
         }
       });
-      console.log('page Number ', page);
       this.garagePage.addPageNumber(page);
     }
   }
@@ -117,7 +125,6 @@ export class App {
     if (this.mainElement) {
       this.mainElement.innerHTML = '';
       this.winnersPage.winnersContainer.element.innerHTML = '';
-      console.log('Winners should be shown');
       this.mainElement.appendChild(this.winnersPage.element);
       serv.getWinners(page).then((result) => {
         this.showWinnersRows(result.result);

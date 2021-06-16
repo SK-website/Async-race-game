@@ -12,9 +12,11 @@
   align-items: center;
 }
 
-.row-3 {
-  width: 100%;
+.road {
+  display: block;
+  max-width: 100vw;
   height: 2rem;
+  padding-right: 50px;
 }
 .start-car-button,
 .box-car-button {
@@ -26,7 +28,9 @@
   color: #fefefe;
 }
 .car-picture-container {
-  position: relativ e;
+  position: relative;
+  left: 0;
+  right: 0;
 }
 .remove-car-button,
 .select-car-button {

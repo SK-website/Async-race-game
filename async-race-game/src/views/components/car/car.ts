@@ -14,12 +14,15 @@ export class Car extends BaseComponent {
 
   public id: number;
 
+  public carPictureContainer: HTMLElement;
+
   constructor({ name, color, id }: NewCarData) {
     super('div', ['car-picture-container']);
+    this.carPictureContainer = this.element;
     this.name = name;
     this.color = color;
     this.id = id;
-    this.element.innerHTML = `
+    this.carPictureContainer.innerHTML = `
     <svg
     version="1.1"
     id="Capa_1"

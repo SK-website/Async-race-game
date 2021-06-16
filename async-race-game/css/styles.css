@@ -101,5 +101,6 @@ button {
 .inactive {
   cursor: auto;
   pointer-events: none;
+  opacity: 0.3;
 }
 /*# sourceMappingURL=styles.css.map */
