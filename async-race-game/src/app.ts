@@ -10,6 +10,15 @@ import { NewCarData } from './views/components/car/car';
 import { NewCar } from './views/components/new-car/new-car';
 import { WinnerData } from './views/components/winners-table-row/winners-table-row';
 
+interface RaceResults {
+  id: number,
+  time: number,
+  counter: number,
+  startTime: number
+}
+export let ROADWIDTH = window.innerWidth;
+window.addEventListener('change', () => ROADWIDTH = window.innerWidth);
+
 export class App {
   private readonly header: Header;
 
@@ -21,9 +30,18 @@ export class App {
 
   private engineStatus: string;
 
-  constructor() {
-    this.engineStatus = 'stopped';
+  static winnerRaceData: RaceResults = {
+    id: 0,
+    time: 0,
+    counter: 0,
+    startTime: 0,
+  };
 
+  // static roadWidth = ROADWIDTH;
+
+  constructor() {
+    // App.roadWidth = window.innerWidth;
+    this.engineStatus = 'stopped';
     this.header = new Header();
     this.garagePage = new GaragePage();
     this.mainElement = document.getElementById('main');
@@ -48,22 +66,37 @@ export class App {
       const userInput = this.garagePage.controlBlock.updateBlock.getCarUpdateData();
       serv.updateCar(userInput, currentCarId).then((result) => GaragePage.setCarUpdate(result, currentCar));
     };
-
+    this.garagePage.onDeleteButtonClick = () => {
+      this.showChangedCarList();
+    };
     this.garagePage.controlBlock.manageBlock.generateButton.onButtonClick = () => {
       App.carAutoGeneration();
       this.showChangedCarList();
     };
-    this.garagePage.onDeleteButtonClick = () => {
-      this.showChangedCarList();
+
+    this.garagePage.controlBlock.manageBlock.raceButton.onButtonClick = async () => {
+      const currentPageNumber = parseInt(this.garagePage.pageNumber.element.innerHTML, 10);
+      const cars = await serv.getCars(currentPageNumber);
+      const carsIds: number[] = win.getCarsOnPageIds(cars.result);
+      this.startRace(carsIds);
     };
+
+    this.garagePage.controlBlock.manageBlock.resetButton.onButtonClick = async () => {
+      const currentPageNumber = parseInt(this.garagePage.pageNumber.element.innerHTML, 10);
+      const cars = await serv.getCars(currentPageNumber);
+      const carsIds: number[] = win.getCarsOnPageIds(cars.result);
+      this.sendCarsOnPageToBox(carsIds);
+    };
+
     this.garagePage.pagesControl.nextButton.onButtonClick = () => {
-      const currentPageNumber = Number(this.garagePage.pageNumber.element.innerHTML);
-      const carsTotalAmount = Number(this.garagePage.carsTotalAmount.element.innerHTML);
+      const currentPageNumber = parseInt(this.garagePage.pageNumber.element.innerHTML, 10);
+      const carsTotalAmount = parseInt(this.garagePage.carsTotalAmount.element.innerHTML, 10);
       if (carsTotalAmount / currentPageNumber > 7) {
         const newPage = currentPageNumber + 1;
         this.showChangedCarList(newPage);
       }
     };
+
     this.garagePage.pagesControl.prevButton.onButtonClick = () => {
       const currentPageNumber = Number(this.garagePage.pageNumber.element.innerHTML);
       if (currentPageNumber > 1) {
@@ -71,6 +104,7 @@ export class App {
         this.showChangedCarList(newPage);
       }
     };
+
     this.garagePage.onStartButtonClick = async () => {
       const currentCar = this.garagePage.currentCar as NewCar;
       currentCar.startButton.button.classList.add('inactive');
@@ -148,10 +182,85 @@ export class App {
     }
   }
 
+  sendCarsOnPageToBox = (carsIds: number[]): void => {
+    for (let i = 0; i < carsIds.length; i++) {
+      const carId = carsIds[i];
+      const car = NewCar.allNewCars.find((el) => el.id === carId);
+      if (car) {
+        an.toBox(car.car.carPictureContainer);
+        car.startButton.button.classList.remove('inactive');
+        car.boxButton.button.classList.add('inactive');
+      }
+    }
+  };
+
+  startRace = (carsIds: number[]): void => {
+    console.log('startRace works')
+    App.winnerRaceData.id = 0;
+    App.winnerRaceData.time = 0;
+    App.winnerRaceData.counter = carsIds.length;
+    App.winnerRaceData.startTime = Date.now();
+
+    for (let i = 0; i < carsIds.length; i++) {
+      const carId = carsIds[i];
+      const car = NewCar.allNewCars.find((el) => el.id === carId);
+      if (car) {
+        car.raceResult = 0;
+        car.startButton.button.classList.add('inactive');
+        this.startCarRace(carId, car.car.element).then((res) => {
+          if (res) {
+            if (App.winnerRaceData.time === 0 || res < App.winnerRaceData.time) {
+              App.winnerRaceData.id = carId;
+              App.winnerRaceData.time = res;
+            }
+          }
+        });
+      }
+    }
+  };
+
   static carAutoGeneration(): void {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 100; i++) {
       const newCarData = carDataAutoGeneration();
       serv.createCar(newCarData);
     }
   }
+
+  getWinner = async (): Promise<void> => {
+    const winnerCar = NewCar.allNewCars.find((el) => el.id === App.winnerRaceData.id);
+    if (winnerCar) {
+      winnerCar.wins++;
+      alert(`${winnerCar.car.name} has won the race with time ${App.winnerRaceData.time}ms`);
+      await serv.createWinner({
+        id: winnerCar.id,
+        wins: winnerCar.wins,
+        time: winnerCar.raceResult
+      });
+    }
+
+  };
+
+  startCarRace = async (id: number, car: HTMLElement): Promise<number | void> => {
+    console.log('startCarRace works')
+    const cancel = false;
+    const result = await serv.startEngine(id);
+    let raceTime = await an.startAnimation(id, car);
+    App.winnerRaceData.counter--;
+
+    const currentCarInst = NewCar.allNewCars.find((el) => el.id === id);
+    currentCarInst?.boxButton.button.classList.remove('inactive');
+    const newCarInstance = NewCar.allNewCars.find((el) => el.id === id);
+    if (newCarInstance && (typeof raceTime === 'number')) {
+      raceTime = Date.now() - App.winnerRaceData.startTime;
+
+      if (App.winnerRaceData.time === 0 || raceTime < App.winnerRaceData.time) {
+        App.winnerRaceData.id = id;
+        App.winnerRaceData.time = raceTime;
+        newCarInstance.raceResult = raceTime;
+      }
+    }
+    if (App.winnerRaceData.counter <= 0) {
+      this.getWinner();
+    }
+  };
 }

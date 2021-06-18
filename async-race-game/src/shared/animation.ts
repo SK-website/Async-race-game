@@ -1,19 +1,24 @@
 import * as apserv from '../api/api';
+import { ROADWIDTH } from '../app'
+export interface GetRaceReturn {
+  id: number;
+  time: number;
+}
+
 
 const draw = (time: number, timePassed: number, car: HTMLElement, width: number | undefined): void => {
-  console.log('draw works');
-  if (width) {
+  if (width && width > 0) {
+    console.log('drow works', 'width =', width, 'car === ', car)
     const steplength = width * (timePassed / time);
     car.style.left = `${steplength}px`;
-
-    // car.style.left = `${timePassed / steplength}px`;
   }
 };
 
-export const toBox = (car: HTMLElement) => {
-  console.log('toBox works');
-  const a = car.closest('div');
-  const width = a?.offsetWidth;
+export const toBox = (car: HTMLElement): void => {
+  // const a = car.closest('div');
+  // const width = a?.offsetWidth;
+  const width = ROADWIDTH;
+  console.log(ROADWIDTH, 'ROADWIDTH')
   if (width) {
     car.style.left = '0';
   }
@@ -21,15 +26,20 @@ export const toBox = (car: HTMLElement) => {
 
 export const getCarRaceTime = ({ velocity, distance }: apserv.StartCarData): number => distance / velocity;
 
-export const startAnimation = async (id: number, car: HTMLElement): Promise<void> => {
+export const startAnimation = async (id: number, car: HTMLElement): Promise<number | void | undefined> => {
   let cancel = false;
+  // const a = car.closest('div');
+  // console.log('car ', car, '  closest div ===', a)
+  // const width = a?.offsetWidth;
+  // console.log('width ===', width)
+  const width = ROADWIDTH;
+  console.log(ROADWIDTH, 'ROADWIDTH')
+
+
   const result = await apserv.startEngine(id);
   const time: number = getCarRaceTime(result);
-  console.log(time);
   const start = Date.now();
-  const a = car.closest('div');
-  const width = a?.offsetWidth;
-  console.log(width);
+
   const timer = setInterval(() => {
     const timePassed = Date.now() - start;
     if (timePassed >= time || cancel === true) {
@@ -40,26 +50,7 @@ export const startAnimation = async (id: number, car: HTMLElement): Promise<void
   }, 20);
   const resultToDriveMode = await apserv.toDriveMode(id);
   if (!resultToDriveMode) {
-    console.log('toDriveMode     Stop car animation');
     cancel = true;
-    // функция stop машинки
   }
-  if (resultToDriveMode) console.log('finish');
-};
-
-export const startCarRace = async (id: number, car: HTMLElement): Promise<void> => {
-  let cancel = false;
-  const result = await apserv.startEngine(id);
-  const time: number = getCarRaceTime(result);
-  console.log(time);
-  // функция start машинки
-  startAnimation(time, car);
-  const resultToDriveMode = await apserv.toDriveMode(id);
-
-  if (!resultToDriveMode) {
-    console.log('toDriveMode     Stop car animation');
-    cancel = true;
-    // функция stop машинки
-  }
-  if (resultToDriveMode) console.log('finish');
+  if (resultToDriveMode) return time;
 };

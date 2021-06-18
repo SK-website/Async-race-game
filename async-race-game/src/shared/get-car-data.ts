@@ -11,11 +11,19 @@ export const getWinnerRowData = async ({ id, wins: carWins, time: winTime }: Win
   console.log(result);
   const carName = getWinnerName(result);
   const carColor = getWinnerCarColor(result);
-  console.log(carName, carColor);
   return {
     color: carColor,
     name: carName,
     wins: carWins,
     time: winTime,
   };
+};
+
+export const getCarsOnPageIds = (result: NewCarData[]):number[] => {
+  const ids: number[] = [];
+  for (let i = 0; i < result.length; i++) {
+    const { id } = result[i];
+    ids.push(id);
+  }
+  return ids;
 };

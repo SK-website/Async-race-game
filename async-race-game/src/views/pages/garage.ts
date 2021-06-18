@@ -59,9 +59,11 @@ export class GaragePage extends BaseComponent {
 
   addCar(carData: NewCarData): void {
     const newLine = new NewCar(carData);
+    NewCar.allNewCars.push(newLine);
 
     this.carsContainer.element.appendChild(newLine.element);
     this.controlBlock.createBlock.createName.name.value = '';
+    newLine.car.carPictureContainer.setAttribute('id', String(newLine.car.id));
 
     newLine.selectButton.onButtonClick = () => {
       this.currentCar = newLine;

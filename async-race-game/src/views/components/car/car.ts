@@ -1,28 +1,29 @@
 // type SvgInHtml = HTMLElement & SVGElement;
 
+import { isThisTypeNode } from 'typescript';
 import { BaseComponent } from '../base-component';
 
 export interface NewCarData {
-  name: string;
-  color: string;
-  id: number;
+	name: string;
+	color: string;
+	id: number;
 }
 export class Car extends BaseComponent {
-  public name: string;
+	public name: string;
 
-  public color: string;
+	public color: string;
 
-  public id: number;
+	public id: number;
 
-  public carPictureContainer: HTMLElement;
+	public carPictureContainer: HTMLElement;
 
-  constructor({ name, color, id }: NewCarData) {
-    super('div', ['car-picture-container']);
-    this.carPictureContainer = this.element;
-    this.name = name;
-    this.color = color;
-    this.id = id;
-    this.carPictureContainer.innerHTML = `
+	constructor({ name, color, id }: NewCarData) {
+		super('div', ['car-picture-container']);
+		this.carPictureContainer = this.element;
+		this.name = name;
+		this.color = color;
+		this.id = id;
+		this.carPictureContainer.innerHTML = `
     <svg
     version="1.1"
     id="Capa_1"
@@ -53,5 +54,5 @@ c1.841,0,7.037,0,7.037,0V34.191z M38.168,34.191v-9.994c0,0,7.141,0,8.974,0c1.854
       />
     </g>
   </svg>`;
-  }
+	}
 }
