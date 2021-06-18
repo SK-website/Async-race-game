@@ -16,8 +16,6 @@ interface RaceResults {
   counter: number,
   startTime: number
 }
-export let ROADWIDTH = window.innerWidth;
-window.addEventListener('change', () => ROADWIDTH = window.innerWidth);
 
 export class App {
   private readonly header: Header;
@@ -37,10 +35,7 @@ export class App {
     startTime: 0,
   };
 
-  // static roadWidth = ROADWIDTH;
-
   constructor() {
-    // App.roadWidth = window.innerWidth;
     this.engineStatus = 'stopped';
     this.header = new Header();
     this.garagePage = new GaragePage();
@@ -128,6 +123,7 @@ export class App {
 
   showGarage(page = 1): void {
     if (this.mainElement) {
+      NewCar.allNewCars = [];
       this.mainElement.innerHTML = '';
       this.garagePage.carsContainer.element.innerHTML = '';
       this.mainElement.insertAdjacentElement('beforebegin', this.header.element);
@@ -195,7 +191,7 @@ export class App {
   };
 
   startRace = (carsIds: number[]): void => {
-    console.log('startRace works')
+    console.log('startRace works');
     App.winnerRaceData.id = 0;
     App.winnerRaceData.time = 0;
     App.winnerRaceData.counter = carsIds.length;
@@ -234,14 +230,12 @@ export class App {
       await serv.createWinner({
         id: winnerCar.id,
         wins: winnerCar.wins,
-        time: winnerCar.raceResult
+        time: winnerCar.raceResult,
       });
     }
-
   };
 
   startCarRace = async (id: number, car: HTMLElement): Promise<number | void> => {
-    console.log('startCarRace works')
     const cancel = false;
     const result = await serv.startEngine(id);
     let raceTime = await an.startAnimation(id, car);

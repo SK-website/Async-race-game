@@ -111,4 +111,4 @@ export const createWinner = async (body: CreateWinnerData): Promise<CreateWinner
   });
   const result = response.json();
   return result;
-}
+};
