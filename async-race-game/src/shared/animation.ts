@@ -22,14 +22,10 @@ export const toBox = (car: HTMLElement): void => {
 
 export const getCarRaceTime = ({ velocity, distance }: apserv.StartCarData): number => distance / velocity;
 
-// eslint-disable-next-line consistent-return
-export const startAnimation = async (id: number, car: HTMLElement): Promise<void | number> => {
+export const startAnimation = async (id: number, car: HTMLElement): Promise<void | number | null> => {
   let cancel = false;
   const a = car.closest('div');
-  console.log('car ', car, '  closest div ===', a);
   const width = a?.offsetWidth;
-  console.log('width ===', width);
-
   const result = await apserv.startEngine(id);
   const time: number = getCarRaceTime(result);
   const start = Date.now();
@@ -42,10 +38,9 @@ export const startAnimation = async (id: number, car: HTMLElement): Promise<void
     }
     draw(time, timePassed, car, width);
   }, 20);
-
   const resultToDriveMode = await apserv.toDriveMode(id);
   if (!resultToDriveMode) {
     cancel = true;
-  }
-  if (resultToDriveMode) return time;
+  } else if (resultToDriveMode) return time;
+  return null;
 };

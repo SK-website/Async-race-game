@@ -43,7 +43,6 @@ export class WinnersPage extends BaseComponent {
   }
 
   addWinnersAmount(carsAmount: string): void {
-    console.log('количество машин', carsAmount);
     this.winnersTotalAmount.element.innerHTML = `${carsAmount}`;
   }
 

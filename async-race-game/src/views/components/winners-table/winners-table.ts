@@ -5,7 +5,7 @@ import { BaseComponent } from '../base-component';
 export class Winners extends BaseComponent {
   // private winnersTableHeader: BaseComponent;
 
-  public winnerNumber: BaseComponent;
+  // public winnerNumber: BaseComponent;
 
   public winnerCar: BaseComponent;
 
@@ -22,8 +22,8 @@ export class Winners extends BaseComponent {
   constructor() {
     super('div', ['winners-header-container']);
     this.winnersTableHeader = new BaseComponent('div', ['winners-row']);
-    this.winnerNumber = new BaseComponent('div', ['title-winners-col']);
-    this.winnerNumber.element.textContent = 'number';
+    // this.winnerNumber = new BaseComponent('div', ['title-winners-col']);
+    // this.winnerNumber.element.textContent = 'number';
     this.winnerCar = new BaseComponent('div', ['title-winners-col']);
     this.winnerCar.element.textContent = 'car';
     this.winnerName = new BaseComponent('div', ['title-winners-col']);
@@ -39,7 +39,7 @@ export class Winners extends BaseComponent {
     this.winnerTime.element.addEventListener('click', () => {
       this.onButtonClick?.();
     });
-    this.winnersTableHeader.element.appendChild(this.winnerNumber.element);
+    // this.winnersTableHeader.element.appendChild(this.winnerNumber.element);
     this.winnersTableHeader.element.appendChild(this.winnerCar.element);
     this.winnersTableHeader.element.appendChild(this.winnerName.element);
     this.winnersTableHeader.element.appendChild(this.winnerWins.element);

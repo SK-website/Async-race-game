@@ -22,6 +22,7 @@
 
 .road {
   display: block;
+  max-width: 100vw;
   height: 2rem;
   padding-right: 50px;
 }
@@ -55,7 +56,7 @@
   height: 35px;
   position: absolute;
   bottom: 0;
-  right: 100px;
+  right: 140px;
   z-index: 100;
   background-image: url("../../../assets/red-flag.svg");
 }

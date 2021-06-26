@@ -1,28 +1,12 @@
-// type SvgInHtml = HTMLElement & SVGElement;
-
 import { BaseComponent } from '../base-component';
 
-export interface NewCarData {
-  name: string;
-  color: string;
-  id: number;
-}
-export class Car extends BaseComponent {
-  public name: string;
-
+export class CarWinner extends BaseComponent {
   public color: string;
 
-  public id: number;
-
-  public carPictureContainer: HTMLElement;
-
-  constructor({ name, color, id }: NewCarData) {
+  constructor(color: string) {
     super('div', ['car-picture-container']);
-    this.carPictureContainer = this.element;
-    this.name = name;
     this.color = color;
-    this.id = id;
-    this.carPictureContainer.innerHTML = `
+    this.element.innerHTML = `
     <svg
     version="1.1"
     id="Capa_1"

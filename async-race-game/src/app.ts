@@ -9,6 +9,7 @@ import * as an from './shared/animation';
 import { NewCarData } from './views/components/car/car';
 import { NewCar } from './views/components/new-car/new-car';
 import { WinnerData } from './views/components/winners-table-row/winners-table-row';
+import { Notice } from './views/components/notice/notice';
 
 interface RaceResults {
   id: number,
@@ -53,6 +54,7 @@ export class App {
     this.garagePage.controlBlock.createBlock.createButton.onButtonClick = () => {
       const userInput = this.garagePage.controlBlock.createBlock.getCarCreateData();
       serv.createCar(userInput).then((result) => this.garagePage.addCar(result));
+      this.showGarage();
     };
 
     this.garagePage.controlBlock.updateBlock.updateButton.onButtonClick = () => {
@@ -99,14 +101,30 @@ export class App {
         this.showChangedCarList(newPage);
       }
     };
+    this.winnersPage.pagesControl.nextButton.onButtonClick = () => {
+      const currentPageNumber = parseInt(this.winnersPage.pageNumber.element.innerHTML, 10);
+      const winnersTotalAmount = parseInt(this.winnersPage.winnersTotalAmount.element.innerHTML, 10);
+      if (winnersTotalAmount / currentPageNumber > 7) {
+        const newPage = currentPageNumber + 1;
+        this.showWinners(newPage);
+      }
+    };
+
+    this.winnersPage.pagesControl.prevButton.onButtonClick = () => {
+      const currentPageNumber = Number(this.winnersPage.pageNumber.element.innerHTML);
+      if (currentPageNumber > 1) {
+        const newPage = currentPageNumber - 1;
+        this.showWinners(newPage);
+      }
+    };
 
     this.garagePage.onStartButtonClick = async () => {
       const currentCar = this.garagePage.currentCar as NewCar;
       currentCar.startButton.button.classList.add('inactive');
-      currentCar.boxButton.button.classList.remove('inactive');
       const currentCarId: number = currentCar.car.id;
       const car = currentCar.car.carPictureContainer;
       await an.startAnimation(currentCarId, car);
+      currentCar.boxButton.button.classList.remove('inactive');
       currentCar.boxButton.button.classList.add('active');
     };
 
@@ -191,7 +209,6 @@ export class App {
   };
 
   startRace = (carsIds: number[]): void => {
-    console.log('startRace works');
     App.winnerRaceData.id = 0;
     App.winnerRaceData.time = 0;
     App.winnerRaceData.counter = carsIds.length;
@@ -201,11 +218,11 @@ export class App {
       const carId = carsIds[i];
       const car = NewCar.allNewCars.find((el) => el.id === carId);
       if (car) {
-        car.raceResult = 0;
+        // car.raceResult = 0;
         car.startButton.button.classList.add('inactive');
         this.startCarRace(carId, car.car.element).then((res) => {
           if (res) {
-            if (App.winnerRaceData.time === 0 || res < App.winnerRaceData.time) {
+            if (App.winnerRaceData.time === 0 || (res < App.winnerRaceData.time)) {
               App.winnerRaceData.id = carId;
               App.winnerRaceData.time = res;
             }
@@ -222,22 +239,48 @@ export class App {
     }
   }
 
+  showNotice(name: string, time: number): void {
+    const notice = new Notice(name, time);
+    this.garagePage.element.appendChild(notice.element);
+
+    setTimeout(() => { this.garagePage.element.removeChild(notice.element); }, 3000);
+  }
+
   getWinner = async (): Promise<void> => {
     const winnerCar = NewCar.allNewCars.find((el) => el.id === App.winnerRaceData.id);
+
+    let newBestTime = 0;
     if (winnerCar) {
-      winnerCar.wins++;
-      alert(`${winnerCar.car.name} has won the race with time ${App.winnerRaceData.time}ms`);
-      await serv.createWinner({
-        id: winnerCar.id,
-        wins: winnerCar.wins,
-        time: winnerCar.raceResult,
-      });
+      this.showNotice(winnerCar.car.name, App.winnerRaceData.time);
+      const prevCarResult = await serv.checkWinner(winnerCar.id);
+
+      if (prevCarResult) {
+        winnerCar.wins = prevCarResult.wins + 1;
+        if (prevCarResult.time > winnerCar.raceResult) {
+          newBestTime = winnerCar.raceResult;
+          await serv.updateWinner({
+            wins: winnerCar.wins,
+            time: newBestTime,
+          }, winnerCar.id);
+        } else if (prevCarResult.time <= winnerCar.raceResult) {
+          await serv.updateWinner({
+            wins: winnerCar.wins,
+            time: prevCarResult.time,
+          }, winnerCar.id);
+        }
+      } else if (!prevCarResult) {
+        winnerCar.wins++;
+        await serv.createWinner({
+          id: winnerCar.id,
+          wins: winnerCar.wins,
+          time: winnerCar.raceResult,
+        });
+      }
     }
   };
 
   startCarRace = async (id: number, car: HTMLElement): Promise<number | void> => {
-    const cancel = false;
-    const result = await serv.startEngine(id);
+    await serv.startEngine(id);
     let raceTime = await an.startAnimation(id, car);
     App.winnerRaceData.counter--;
 
@@ -252,9 +295,9 @@ export class App {
         App.winnerRaceData.time = raceTime;
         newCarInstance.raceResult = raceTime;
       }
-    }
-    if (App.winnerRaceData.counter <= 0) {
-      this.getWinner();
+      if (App.winnerRaceData.counter <= 0) {
+        this.getWinner();
+      }
     }
   };
 }

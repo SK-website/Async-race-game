@@ -1,0 +1,19 @@
+.notice {
+  position: absolute;
+  width: 50%;
+  height: 20%;
+  line-height: 8rem;
+  overflow: auto;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  vertical-align: center;
+  font-size: 1.5rem;
+  color: hsl(56, 92%, 67%);
+  background-color: rgb(52, 40, 230);
+  border-radius: 10px;
+  box-shadow: rgb(229, 255, 0);
+}

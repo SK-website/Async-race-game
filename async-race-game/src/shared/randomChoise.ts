@@ -31,7 +31,7 @@ export const getRandomCarColor = (): string => {
   return color;
 };
 
-export const carDataAutoGeneration = () => {
+export const carDataAutoGeneration = (): Record<string, string> => {
   const carName = getRandomCarName();
   const carColor = getRandomCarColor();
   return {

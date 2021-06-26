@@ -11,7 +11,7 @@ export class Name {
     this.name.classList.add(...styles);
     this.name.type = 'text';
     this.name.placeholder = placeholder;
-    this.name.addEventListener('input', (ev: Event) => {
+    this.name.addEventListener('input', () => {
       this.onNameClick?.();
     });
   }

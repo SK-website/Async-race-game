@@ -12,7 +12,7 @@ export class ColorPick {
     this.colorPick.classList.add(...styles);
     this.colorPick.type = 'color';
     this.colorPick.value = '#f7080c';
-    this.colorPick.addEventListener('input', (ev: Event) => {
+    this.colorPick.addEventListener('input', () => {
       this.onColorPickInput?.();
     });
   }

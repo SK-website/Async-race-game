@@ -23,7 +23,6 @@ export class UpdateCar extends BaseComponent {
   getCarUpdateData = (): Record<string, unknown> => {
     const carUpdatedName = this.updateName.name.value;
     const carUpdatedColor = this.updateColor.colorPick.value;
-    console.log('carUpdatedName = ', carUpdatedName, 'carUpdatedColor = ', carUpdatedColor);
     return {
       name: carUpdatedName,
       color: carUpdatedColor,

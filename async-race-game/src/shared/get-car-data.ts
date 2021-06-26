@@ -8,7 +8,6 @@ export const getWinnerName = (carData: NewCarData): string => carData.name;
 
 export const getWinnerRowData = async ({ id, wins: carWins, time: winTime }: WinnerData): Promise<WinnerRowData> => {
   const result = await apiserv.getCar(Number(id));
-  console.log(result);
   const carName = getWinnerName(result);
   const carColor = getWinnerCarColor(result);
   return {
@@ -19,7 +18,7 @@ export const getWinnerRowData = async ({ id, wins: carWins, time: winTime }: Win
   };
 };
 
-export const getCarsOnPageIds = (result: NewCarData[]):number[] => {
+export const getCarsOnPageIds = (result: NewCarData[]): number[] => {
   const ids: number[] = [];
   for (let i = 0; i < result.length; i++) {
     const { id } = result[i];

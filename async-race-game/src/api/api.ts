@@ -25,7 +25,7 @@ export interface CreateWinnerData {
   time: number
 }
 
-export const createCar = async (body: Record<string, unknown>) => {
+export const createCar = async (body: Record<string, unknown>): Promise<NewCarData> => {
   const response = await fetch(garage, {
     method: 'POST',
     body: JSON.stringify(body),
@@ -35,7 +35,7 @@ export const createCar = async (body: Record<string, unknown>) => {
   return result;
 };
 
-export const updateCar = async (body: Record<string, unknown>, id: number) => {
+export const updateCar = async (body: Record<string, unknown>, id: number): Promise<NewCarData> => {
   const url = `${garage}/${id}`;
   const response = await fetch(url, {
     method: 'PUT',
@@ -102,6 +102,15 @@ export const getWinners = async (page = 1, limit = 10, sort = 'wins', order = 'D
   }
   return { result, totalAmount };
 };
+export const checkWinner = async (id: number): Promise<WinnerData | null> => {
+  const response = await fetch(`${winners}/${id}`);
+
+  if (response.status === 200) {
+    const result: WinnerData = await response.json();
+    return result;
+  }
+  return null;
+};
 
 export const createWinner = async (body: CreateWinnerData): Promise<CreateWinnerData> => {
   const response = await fetch(winners, {
@@ -109,6 +118,22 @@ export const createWinner = async (body: CreateWinnerData): Promise<CreateWinner
     body: JSON.stringify(body),
     headers: { 'Content-Type': 'application/json' },
   });
-  const result = response.json();
+  const result = await response.json();
   return result;
+};
+
+export const deleteWinner = async (id: number): Promise<void> => {
+  const url = `${winners}/${id}`;
+  await fetch(url, {
+    method: 'DELETE',
+  });
+};
+
+export const updateWinner = async (body: Record<string, number>, id: number): Promise<void> => {
+  const url = `${winners}/${id}`;
+  await fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify(body),
+    headers: { 'Content-Type': 'application/json' },
+  });
 };

@@ -23,7 +23,6 @@ export class CreateCar extends BaseComponent {
   getCarCreateData = (): Record<string, unknown> => {
     const carName = this.createName.name.value;
     const carColor = this.createColor.colorPick.value;
-    console.log('carName = ', carName, 'carColor = ', carColor);
     return {
       name: carName,
       color: carColor,
