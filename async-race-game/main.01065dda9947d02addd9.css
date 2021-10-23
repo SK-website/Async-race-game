@@ -1,0 +1,29 @@
+@font-face{font-family:"Roboto";src:url(assets/a8d6ac03c7b96b7acb62.ttf)}@font-face{font-family:"Roboto";src:url(assets/75371f53f06181df75f1.ttf)}@font-face{font-family:"Roboto";src:url(assets/7429a63c09f79a1760b0.ttf)}*{margin:0;padding:0}html{font-family:Roboto,sans-serif;font-size:20px;box-sizing:border-box}ol,ul{list-style:none}input{padding:0;margin:0;border:0;border:none}a{text-decoration:none;color:inherit;cursor:pointer}img{max-width:100%;display:block}body{padding:1rem 1rem 1rem .5rem;font-family:Roboto,sans-serif;color:#daa520;background:#0d0b2b;font-size:1rem}button{margin:0 0 0 0}.main{max-height:100vh}.create-car,.update-car,.manage-race,.row-1,.row-2,.winners-row{display:flex;justify-content:start;align-items:center}.manage-race,.pagination{margin-bottom:.5rem}.page-titie{font-size:1.2rem;font-weight:600;letter-spacing:2px}.page-number{font-size:1rem;font-weight:600;letter-spacing:1.5px}.inactive{cursor:auto;pointer-events:none;opacity:.3}
+.button{margin-right:.3rem;margin-bottom:.3rem;font-family:Roboto,sans-serif;width:6.5rem;height:1.5rem;border-color:transparent;border-radius:5px;text-transform:uppercase;cursor:pointer}.button:hover{opacity:.8}.create-car-button,.update-car-button{font-size:.6rem;width:6.5rem;height:1.1rem}.reset-button,.race-button,.generate-button{font-size:.6rem;width:6.5rem;height:1.1rem}
+.nav{margin-bottom:1rem;display:flex;align-items:center;justify-content:start}.nav-buton-garage{background-color:#4237a7;background-size:15% auto;color:#93d2dd}.nav-buton-winners{background-color:#ff0}
+.car-color{padding:0 0 0 0;width:2rem;height:1.1rem;margin-right:.3rem;margin-bottom:.3rem;display:block;border-color:transparent;border-radius:5px}
+.input-name{display:block;width:10.9rem;height:1.1rem;margin-right:.3rem;margin-bottom:.3rem;border-color:transparent;border-radius:5px;background-color:#ddd7f0}
+.car{border-bottom:3px dotted #ceceeb;position:relative}.car-name{font-size:.7rem}.row-1,.row-2{display:flex;justify-content:start;align-items:center}.road{display:block;height:2rem;padding-right:150px}.start-car-button,.box-car-button{width:1rem;height:1rem;font-size:.6rem;border:1px solid #fefefe;background-color:#0d0b2b;color:#fefefe}.car-picture-container{position:relative;left:0;right:0}.remove-car-button,.select-car-button{margin-top:4px;width:2.3rem;height:.8rem;font-size:.4rem}.flag-container{width:35px;height:35px;position:absolute;bottom:0;right:150px;z-index:100;background-image:url(assets/1350d58c465cbeba0cf0.svg)}
+.pages-change-block{margin-top:.5rem}.pages-change-block .prev-button,.pages-change-block .next-button{width:5rem;color:#93d2dd;background-color:#4237a7}
+.winners-container,.winners-header-container{width:70%;margin:0 auto}.title-winners-col{width:calc(100% / 4);height:3rem;display:flex;align-items:center;justify-content:center;font-size:1rem;color:#daa520;text-transform:capitalize;border-bottom:2px solid #daa520}.winners-col{width:calc(100% / 4);height:3rem;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:500;color:#daa520;text-transform:capitalize;border-bottom:1px dotted #daa520}
+.winners-row{display:flex;justify-content:start;align-items:center}
+.notice {
+  position: absolute;
+  width: 50%;
+  height: 20%;
+  line-height: 8rem;
+  overflow: auto;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  vertical-align: center;
+  font-size: 1.5rem;
+  color: hsl(56, 92%, 67%);
+  background-color: rgb(52, 40, 230);
+  border-radius: 10px;
+  box-shadow: rgb(229, 255, 0);
+}
+
