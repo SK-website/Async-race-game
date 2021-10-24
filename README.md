@@ -5,7 +5,7 @@ Play drag-racing competition in order to discover which car fastest :-)
 - Сommunication with a server (fetch, REST API)
 - Async coding / Promises
 - JS Animations
-- DOM Api
+- DOM API
 
 ##### Used techologies: TypeScript, HTML, SCSS, Webpack, ESLint
 
