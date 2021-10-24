@@ -1,7 +1,7 @@
 # Async-race-game  
 Play drag-racing competition in order to discover which car fastest :-)
 
-## Key skills
+#### Key skills
 - Сommunication with a server (fetch, REST API)
 - Async coding / Promises
 - JS Animations
