@@ -22,9 +22,8 @@
 
 .road {
   display: block;
-  max-width: 100vw;
   height: 2rem;
-  padding-right: 50px;
+  padding-right: 150px;
 }
 
 .start-car-button,
@@ -56,7 +55,7 @@
   height: 35px;
   position: absolute;
   bottom: 0;
-  right: 140px;
+  right: 150px;
   z-index: 100;
   background-image: url("../../../assets/red-flag.svg");
 }
